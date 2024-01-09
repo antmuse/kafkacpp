@@ -38,7 +38,7 @@
 #include <mutex>
 #include <tuple>
 #include <chrono>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "group_information.h"
 #include "topic_partition.h"
 #include "topic_partition_list.h"

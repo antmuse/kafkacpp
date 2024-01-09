@@ -35,7 +35,7 @@
 #include <vector>
 #include <cstdint>
 #include <unordered_set>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "macros.h"
 
 namespace cppkafka {

@@ -29,7 +29,8 @@
 
 #include "configuration.h"
 #include <vector>
-#include <librdkafka/rdkafka.h>
+#include <optional>
+#include <rdkafka.h>
 #include "exceptions.h"
 #include "message.h"
 #include "producer.h"
@@ -41,7 +42,7 @@ using std::move;
 using std::vector;
 using std::initializer_list;
 using std::chrono::milliseconds;
-using boost::optional;
+using std::optional;
 
 namespace cppkafka {
 

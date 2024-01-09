@@ -33,7 +33,7 @@
 #include <string>
 #include <functional>
 #include <initializer_list>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "clonable_ptr.h"
 #include "configuration_base.h"
 #include "macros.h"

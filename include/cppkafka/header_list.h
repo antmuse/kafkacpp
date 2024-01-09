@@ -30,7 +30,7 @@
 #ifndef CPPKAFKA_HEADER_LIST_H
 #define CPPKAFKA_HEADER_LIST_H
 
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "clonable_ptr.h"
 #include "header.h"
 #include "header_list_iterator.h"

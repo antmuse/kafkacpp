@@ -29,7 +29,7 @@
 
 #include <iostream>
 #include <tuple>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "topic_partition.h"
 
 using std::string;

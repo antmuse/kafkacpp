@@ -29,7 +29,7 @@
 
 #include <vector>
 #include <memory>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "event.h"
 #include "macros.h"
 #include "message.h"

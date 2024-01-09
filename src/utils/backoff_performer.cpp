@@ -31,6 +31,8 @@
 #include <limits>
 #include "utils/backoff_performer.h"
 
+#undef max
+
 using std::min;
 using std::numeric_limits;
 

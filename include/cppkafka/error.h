@@ -32,7 +32,7 @@
 
 #include <string>
 #include <iosfwd>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "macros.h"
 
 namespace cppkafka {

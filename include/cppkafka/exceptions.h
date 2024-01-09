@@ -32,7 +32,7 @@
 
 #include <stdexcept>
 #include <string>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "macros.h"
 #include "error.h"
 

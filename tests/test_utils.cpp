@@ -5,6 +5,8 @@
 #include <random>
 #include "test_utils.h"
 
+#undef max
+
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 using std::chrono::seconds;

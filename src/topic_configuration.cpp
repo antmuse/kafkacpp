@@ -29,7 +29,7 @@
 
 #include "topic_configuration.h"
 #include <vector>
-#include <librdkafka/rdkafka.h>
+#include <rdkafka.h>
 #include "exceptions.h"
 #include "topic.h"
 #include "buffer.h"
