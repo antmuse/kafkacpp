@@ -28,7 +28,7 @@
  */
 
 #include <iostream>
-#include "error.h"
+#include "cppkafka/error.h"
 
 using std::string;
 using std::ostream;

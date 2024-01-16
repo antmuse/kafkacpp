@@ -41,18 +41,17 @@ using std::make_tuple;
 using std::lock_guard;
 using std::mutex;
 using std::exception;
-using std::chrono::milliseconds;
 
 namespace cppkafka {
 
-const milliseconds KafkaHandleBase::DEFAULT_TIMEOUT{1000};
+const std::chrono::milliseconds KafkaHandleBase::DEFAULT_TIMEOUT{1000};
 
 KafkaHandleBase::KafkaHandleBase(Configuration config) 
 : timeout_ms_(DEFAULT_TIMEOUT), config_(move(config)), handle_(nullptr, HandleDeleter(this)), destroy_flags_(0) {
     auto& maybe_config = config_.get_default_topic_configuration();
-    if (maybe_config) {
-        maybe_config->set_as_opaque();
-        auto conf_handle = rd_kafka_topic_conf_dup(maybe_config->get_handle());
+    if (maybe_config.get_handle()) {
+        maybe_config.set_as_opaque();
+        auto conf_handle = rd_kafka_topic_conf_dup(maybe_config.get_handle());
         rd_kafka_conf_set_default_topic_conf(config_.get_handle(), conf_handle);
     }
 }
@@ -79,7 +78,7 @@ void KafkaHandleBase::resume(const std::string& topic) {
     resume_partitions(convert(topic, get_metadata(get_topic(topic)).get_partitions()));
 }
 
-void KafkaHandleBase::set_timeout(milliseconds timeout) {
+void KafkaHandleBase::set_timeout(std::chrono::milliseconds timeout) {
     timeout_ms_ = timeout;
 }
 
@@ -113,7 +112,7 @@ KafkaHandleBase::query_offsets(const TopicPartition& topic_partition) const {
 
 KafkaHandleBase::OffsetTuple
 KafkaHandleBase::query_offsets(const TopicPartition& topic_partition,
-                               milliseconds timeout) const {
+                               std::chrono::milliseconds timeout) const {
     int64_t low;
     int64_t high;
     const string& topic = topic_partition.get_topic();
@@ -131,7 +130,7 @@ Metadata KafkaHandleBase::get_metadata(bool all_topics) const {
 }
 
 Metadata KafkaHandleBase::get_metadata(bool all_topics,
-                                       milliseconds timeout) const {
+                                       std::chrono::milliseconds timeout) const {
     return get_metadata(all_topics, nullptr, timeout);
 }
 
@@ -140,7 +139,7 @@ TopicMetadata KafkaHandleBase::get_metadata(const Topic& topic) const {
 }
 
 TopicMetadata KafkaHandleBase::get_metadata(const Topic& topic,
-                                            milliseconds timeout) const {
+                                            std::chrono::milliseconds timeout) const {
     Metadata md = get_metadata(false, topic.get_handle(), timeout);
     auto topics = md.get_topics();
     if (topics.empty()) {
@@ -154,7 +153,7 @@ GroupInformation KafkaHandleBase::get_consumer_group(const string& name) {
 }
 
 GroupInformation KafkaHandleBase::get_consumer_group(const string& name,
-                                                     milliseconds timeout) {
+                                                     std::chrono::milliseconds timeout) {
     auto result = fetch_consumer_groups(name.c_str(), timeout);
     if (result.empty()) {
         throw ElementNotFound("consumer group information", name);
@@ -166,7 +165,7 @@ vector<GroupInformation> KafkaHandleBase::get_consumer_groups() {
     return get_consumer_groups(timeout_ms_);
 }
 
-vector<GroupInformation> KafkaHandleBase::get_consumer_groups(milliseconds timeout) {
+vector<GroupInformation> KafkaHandleBase::get_consumer_groups(std::chrono::milliseconds timeout) {
     return fetch_consumer_groups(nullptr, timeout);
 }
 
@@ -177,7 +176,7 @@ KafkaHandleBase::get_offsets_for_times(const TopicPartitionsTimestampsMap& queri
 
 TopicPartitionList
 KafkaHandleBase::get_offsets_for_times(const TopicPartitionsTimestampsMap& queries,
-                                       milliseconds timeout) const {
+                                       std::chrono::milliseconds timeout) const {
     TopicPartitionList topic_partitions;
     for (const auto& query : queries) {
         const TopicPartition& topic_partition = query.first;
@@ -196,7 +195,7 @@ string KafkaHandleBase::get_name() const {
     return rd_kafka_name(handle_.get());
 }
 
-milliseconds KafkaHandleBase::get_timeout() const {
+std::chrono::milliseconds KafkaHandleBase::get_timeout() const {
     return timeout_ms_;
 }
 
@@ -226,7 +225,7 @@ Topic KafkaHandleBase::get_topic(const string& name, rd_kafka_topic_conf_t* conf
 
 Metadata KafkaHandleBase::get_metadata(bool all_topics,
                                        rd_kafka_topic_t* topic_ptr,
-                                       milliseconds timeout) const {
+                                       std::chrono::milliseconds timeout) const {
     const rd_kafka_metadata_t* metadata;
     const int timeout_ms = static_cast<int>(timeout.count());
     rd_kafka_resp_err_t error = rd_kafka_metadata(get_handle(), !!all_topics,
@@ -236,7 +235,7 @@ Metadata KafkaHandleBase::get_metadata(bool all_topics,
 }
 
 vector<GroupInformation> KafkaHandleBase::fetch_consumer_groups(const char* name,
-                                                                milliseconds timeout) {
+                                                                std::chrono::milliseconds timeout) {
     const rd_kafka_group_list* list = nullptr;
     const int timeout_ms = static_cast<int>(timeout.count());
     auto result = rd_kafka_list_groups(get_handle(), name, &list, timeout_ms);

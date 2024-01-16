@@ -33,6 +33,7 @@
 #include "macros.h"
 #include "buffer.h"
 #include <string>
+#include <tuple>
 #include <assert.h>
 
 #if (RD_KAFKA_VERSION >= RD_KAFKA_HEADERS_SUPPORT_VERSION)

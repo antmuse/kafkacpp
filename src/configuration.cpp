@@ -29,7 +29,6 @@
 
 #include "configuration.h"
 #include <vector>
-#include <optional>
 #include <rdkafka.h>
 #include "exceptions.h"
 #include "message.h"
@@ -42,7 +41,6 @@ using std::move;
 using std::vector;
 using std::initializer_list;
 using std::chrono::milliseconds;
-using std::optional;
 
 namespace cppkafka {
 
@@ -198,8 +196,7 @@ Configuration& Configuration::set_events(int events) {
 }
 #endif
 
-Configuration&
-Configuration::set_default_topic_configuration(TopicConfiguration config) {
+Configuration& Configuration::set_default_topic_configuration(TopicConfiguration config) {
     default_topic_config_ = std::move(config);
     return *this;
 }
@@ -265,11 +262,11 @@ Configuration::get_background_event_callback() const {
     return background_event_callback_;
 }
 
-const optional<TopicConfiguration>& Configuration::get_default_topic_configuration() const {
+const TopicConfiguration& Configuration::get_default_topic_configuration() const {
     return default_topic_config_;
 }
 
-optional<TopicConfiguration>& Configuration::get_default_topic_configuration() {
+TopicConfiguration& Configuration::get_default_topic_configuration() {
     return default_topic_config_;
 }
 

@@ -31,11 +31,10 @@
 #define CPPKAFKA_MESSAGE_H
 
 #include <memory>
+#include <vector>
 #include <cstdint>
 #include <chrono>
 #include <cassert>
-//#include <boost/optional.hpp>
-#include <optional>
 #include <rdkafka.h>
 #include "buffer.h"
 #include "macros.h"
@@ -188,9 +187,9 @@ public:
     /**
      * \brief Gets this Message's timestamp
      *
-     * If calling rd_kafka_message_timestamp returns -1, then boost::none_t will be returned.
+     * If calling rd_kafka_message_timestamp returns -1, then INVALID_TIME will be returned.
      */
-    std::optional<MessageTimestamp> get_timestamp() const;
+    MessageTimestamp get_timestamp() const;
     
 #if RD_KAFKA_VERSION >= RD_KAFKA_MESSAGE_LATENCY_SUPPORT_VERSION
     /**

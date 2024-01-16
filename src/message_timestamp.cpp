@@ -33,6 +33,9 @@ using std::chrono::milliseconds;
 
 namespace cppkafka {
 
+MessageTimestamp::MessageTimestamp() : timestamp_(std::chrono::milliseconds(0)), type_(INVALID_TIME) {
+}
+
 MessageTimestamp::MessageTimestamp(milliseconds timestamp, TimestampType type)
 : timestamp_(timestamp),
   type_(type) {

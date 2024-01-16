@@ -26,12 +26,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "queue.h"
-#include "exceptions.h"
+#include "cppkafka/queue.h"
+#include "cppkafka/exceptions.h"
 
-using std::vector;
 using std::exception;
-using std::chrono::milliseconds;
 using std::allocator;
 
 namespace cppkafka {
@@ -40,7 +38,7 @@ void dummy_deleter(rd_kafka_queue_t*) {
 
 }
 
-const milliseconds Queue::DEFAULT_TIMEOUT{1000};
+const std::chrono::milliseconds Queue::DEFAULT_TIMEOUT{1000};
 
 Queue Queue::make_non_owning(rd_kafka_queue_t* handle) {
     return Queue(handle, NonOwningTag{});
@@ -88,11 +86,11 @@ void Queue::disable_queue_forwarding() const {
     return rd_kafka_queue_forward(handle_.get(), nullptr);
 }
 
-void Queue::set_timeout(milliseconds timeout) {
+void Queue::set_timeout(std::chrono::milliseconds timeout) {
     timeout_ms_ = timeout;
 }
 
-milliseconds Queue::get_timeout() const {
+std::chrono::milliseconds Queue::get_timeout() const {
     return timeout_ms_;
 }
 
@@ -100,15 +98,15 @@ Message Queue::consume() const {
     return consume(timeout_ms_);
 }
 
-Message Queue::consume(milliseconds timeout) const {
+Message Queue::consume(std::chrono::milliseconds timeout) const {
     return Message(rd_kafka_consume_queue(handle_.get(), static_cast<int>(timeout.count())));
 }
 
-vector<Message> Queue::consume_batch(size_t max_batch_size) const {
+std::vector<Message> Queue::consume_batch(size_t max_batch_size) const {
     return consume_batch(max_batch_size, timeout_ms_, allocator<Message>());
 }
 
-vector<Message> Queue::consume_batch(size_t max_batch_size, milliseconds timeout) const {
+std::vector<Message> Queue::consume_batch(size_t max_batch_size, std::chrono::milliseconds timeout) const {
     return consume_batch(max_batch_size, timeout, allocator<Message>());
 }
 
@@ -116,7 +114,7 @@ Event Queue::next_event() const {
     return next_event(timeout_ms_);
 }
 
-Event Queue::next_event(milliseconds timeout) const {
+Event Queue::next_event(std::chrono::milliseconds timeout) const {
     return Event(rd_kafka_queue_poll(handle_.get(), timeout.count()));
 }
 

@@ -30,7 +30,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
-#include "buffer.h"
+#include "cppkafka/buffer.h"
 
 using std::string;
 using std::equal;

@@ -27,7 +27,7 @@
  *
  */
 
-#include "event.h"
+#include "cppkafka/event.h"
 
 using std::allocator;
 using std::string;

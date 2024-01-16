@@ -46,9 +46,12 @@ public:
      * The timestamp type
      */
     enum TimestampType {
+        INVALID_TIME = RD_KAFKA_TIMESTAMP_NOT_AVAILABLE,
         CREATE_TIME = RD_KAFKA_TIMESTAMP_CREATE_TIME,
         LOG_APPEND_TIME = RD_KAFKA_TIMESTAMP_LOG_APPEND_TIME
     };
+    
+    MessageTimestamp();
     
     /**
      * Gets the timestamp value. If the timestamp was created with a 'time_point',
@@ -60,6 +63,11 @@ public:
      * Gets the timestamp type
      */
     TimestampType get_type() const;
+
+    bool is_valid() const {
+        return INVALID_TIME != type_;
+    }
+
 private:
     MessageTimestamp(std::chrono::milliseconds timestamp, TimestampType type);
     

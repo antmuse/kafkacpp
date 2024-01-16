@@ -1,2 +1,4 @@
 build
-include/cppkafka/config.h
+*.o
+*.so
+*.bin

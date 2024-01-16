@@ -31,7 +31,6 @@
 #define CPPKAFKA_POLL_STRATEGY_BASE_H
 
 #include <map>
-#include <any>
 #include "../queue.h"
 #include "../topic_partition_list.h"
 #include "poll_interface.h"
@@ -45,7 +44,7 @@ namespace cppkafka {
  */
 struct QueueData {
     Queue       queue;
-    std::any  metadata;
+    void*       metadata_any;  //std::any  metadata;
 };
 
 /**

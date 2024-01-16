@@ -27,15 +27,15 @@
  *
  */
 
+#ifndef CPPKAFKA_QUEUE_H
+#define CPPKAFKA_QUEUE_H
+
 #include <vector>
 #include <memory>
 #include <rdkafka.h>
 #include "event.h"
 #include "macros.h"
 #include "message.h"
-
-#ifndef CPPKAFKA_QUEUE_H
-#define CPPKAFKA_QUEUE_H
 
 namespace cppkafka {
 /**
